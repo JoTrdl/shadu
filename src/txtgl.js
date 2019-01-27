@@ -8,7 +8,7 @@
 
   var TxtGL = {}
 
-  var DEVIVE_PIXEL_RATIO = (typeof devicePixelRatio !== 'undefined' && devicePixelRatio) || 1
+  var DEVICE_PIXEL_RATIO = (typeof devicePixelRatio !== 'undefined' && devicePixelRatio) || 1
 
   /**
    * @function get3DContext
@@ -52,23 +52,28 @@
   TxtGL.createProgram = function (gl, vertex, fragment) {
     var vs
     var fs
-    var tmpProgram = gl.createProgram()
+    var program = gl.createProgram()
 
     try {
       vs = this.compileShader(gl, vertex, gl.VERTEX_SHADER)
       fs = this.compileShader(gl, fragment, gl.FRAGMENT_SHADER)
     } catch (e) {
-      gl.deleteProgram(tmpProgram)
+      gl.deleteProgram(program)
       throw e
     }
 
-    gl.attachShader(tmpProgram, vs)
+    gl.attachShader(program, vs)
     gl.deleteShader(vs)
-    gl.attachShader(tmpProgram, fs)
+    gl.attachShader(program, fs)
     gl.deleteShader(fs)
-    gl.linkProgram(tmpProgram)
+    gl.linkProgram(program)
+    gl.validateProgram(program)
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      var info = gl.getProgramInfoLog(program)
+      throw new Error('Could not compile WebGL program:\n' + info)
+    }
 
-    return tmpProgram
+    return program
   }
 
   /**
@@ -310,14 +315,14 @@
     }
 
     // Init texture size
-    this.width = this.options.width || gl.canvas.width
-    this.height = this.options.height || gl.canvas.height
+    this.width = (this.options.width || gl.canvas.offsetWidth) * DEVICE_PIXEL_RATIO
+    this.height = (this.options.height || gl.canvas.offsetHeight) * DEVICE_PIXEL_RATIO
 
     // Init viewport size
     this.viewportWidth = this.options.viewportWidth || gl.canvas.width
     this.viewportHeight = this.options.viewportHeight || gl.canvas.height
 
-    this.uResolution = [this.width / this.height, 1.0, DEVIVE_PIXEL_RATIO]
+    this.uResolution = [this.width / this.height, 1.0, DEVICE_PIXEL_RATIO]
 
     this.reset()
   }
@@ -428,7 +433,6 @@
     var gl = this.gl
 
     gl.useProgram(this.paintShader)
-
     gl.bindFramebuffer(gl.FRAMEBUFFER, null)
 
     applyAttribute(gl, this.paintShader, 'position', 2, this.quadBuffer, this.quadVertices)
@@ -452,12 +456,12 @@
   Texture.prototype.resize = function (width, height, viewportWidth, viewportHeight) {
     var gl = this.gl
 
-    this.width = width || gl.canvas.width
-    this.height = height || gl.canvas.height
+    this.width = width || (gl.canvas.offsetWidth * DEVICE_PIXEL_RATIO)
+    this.height = height || (gl.canvas.offsetHeight * DEVICE_PIXEL_RATIO)
     this.viewportWidth = viewportWidth || gl.canvas.width
     this.viewportHeight = viewportHeight || gl.canvas.height
 
-    this.uResolution = [this.width / this.height, 1.0, DEVIVE_PIXEL_RATIO]
+    this.uResolution = [this.width / this.height, 1.0, DEVICE_PIXEL_RATIO]
 
     for (var i = 0; i < this.textures.length; i++) {
       var t = this.textures[i]

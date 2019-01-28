@@ -1,6 +1,6 @@
 import fragment from './fragment'
 
-import TxtGL from '../../txtgl'
+import TxtGL from 'txtgl'
 
 const canvas = document.getElementById('canvas')
 let CANVAS_RECT

@@ -2,7 +2,7 @@
 import Stats from 'stats.js'
 import fragment from './fragment'
 
-import TxtGL from '../../txtgl'
+import TxtGL from 'txtgl'
 
 const BLOBS = 64
 let WIDTH = window.innerWidth

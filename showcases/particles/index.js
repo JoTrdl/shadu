@@ -5,7 +5,7 @@ import data from './data'
 import vertex from './vertex'
 import fragment from './fragment'
 
-import TxtGL from '../../txtgl'
+import TxtGL from 'txtgl'
 
 let WIDTH = window.innerWidth
 let HEIGHT = window.innerHeight

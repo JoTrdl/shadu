@@ -1,6 +1,6 @@
 
 import Glide from '@glidejs/glide'
-import TxtGL from '../txtgl'
+import TxtGL from 'txtgl'
 
 // https://www.shadertoy.com/view/lldyDs
 const fragment = `

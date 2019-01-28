@@ -16,7 +16,7 @@ import particlesFragment from './fragments/particles-fragment'
 import particlesVertex from './fragments/particles-vertex'
 import visualizer from './fragments/visualizer'
 
-import TxtGL from '../../txtgl'
+import TxtGL from 'txtgl'
 
 let WIDTH = window.innerWidth
 let HEIGHT = window.innerHeight

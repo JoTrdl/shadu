@@ -16,7 +16,7 @@ import particlesFragment from './fragments/particles-fragment'
 import particlesVertex from './fragments/particles-vertex'
 import visualizer from './fragments/visualizer'
 
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 let WIDTH = window.innerWidth
 let HEIGHT = window.innerHeight
@@ -35,7 +35,7 @@ if (!document.location.search.match(/nostats/)) {
   document.body.appendChild(stats.domElement)
 }
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   premultipliedAlpha: false,
   alpha: false,
   depth: false,
@@ -82,7 +82,7 @@ for (var i = 0, l = PARTICLES_CELLS_DATA * PARTICLES_CELLS_DATA; i < l; i++) {
   VERTICES.push(i % PARTICLES_CELLS_DATA / PARTICLES_CELLS_DATA)
   VERTICES.push(Math.floor(i / PARTICLES_CELLS_DATA) / PARTICLES_CELLS_DATA)
 }
-uniforms.particlesData.value = new TxtGL.Texture(gl, {
+uniforms.particlesData.value = new ShadU.Texture(gl, {
   width: PARTICLES_CELLS_DATA,
   height: PARTICLES_CELLS_DATA,
   texture: { type: gl.FLOAT }
@@ -90,7 +90,7 @@ uniforms.particlesData.value = new TxtGL.Texture(gl, {
   .render().reset(true)
   .fragment(particlesData, uniforms)
 
-uniforms.particles.value = new TxtGL.Texture(gl, {
+uniforms.particles.value = new ShadU.Texture(gl, {
   texture: { type: gl.FLOAT },
   geometry: {
     vertices: new Float32Array(VERTICES),
@@ -101,14 +101,14 @@ uniforms.particles.value = new TxtGL.Texture(gl, {
 /**
  * Density field
  */
-uniforms.density.value = new TxtGL.Texture(gl, OPTIONS)
+uniforms.density.value = new ShadU.Texture(gl, OPTIONS)
   .fragment(densityAdd, uniforms)
   .fragment(densityAdvect, uniforms)
 
 /**
  * Curl field
  */
-uniforms.curl.value = new TxtGL.Texture(gl, OPTIONS)
+uniforms.curl.value = new ShadU.Texture(gl, OPTIONS)
   .fragment(curl, uniforms)
 
 /**
@@ -117,7 +117,7 @@ uniforms.curl.value = new TxtGL.Texture(gl, OPTIONS)
  * z: divergence
  * w: pressure
  */
-uniforms.field.value = new TxtGL.Texture(gl, OPTIONS)
+uniforms.field.value = new ShadU.Texture(gl, OPTIONS)
   .fragment(advect, uniforms)
   .callback(() => {
     // compute curl effect
@@ -133,7 +133,7 @@ uniforms.field.value = new TxtGL.Texture(gl, OPTIONS)
   .iterate(8)
   .fragment(substract, uniforms)
 
-const output = new TxtGL.Texture(gl, {
+const output = new ShadU.Texture(gl, {
   texture: {
     minFilter: gl.LINEAR,
     magFilter: gl.LINEAR

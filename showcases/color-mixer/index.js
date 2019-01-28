@@ -1,11 +1,11 @@
 import fragment from './fragment'
 
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 const canvas = document.getElementById('canvas')
 let CANVAS_RECT
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   preserveDrawingBuffer: true
 })
 
@@ -21,7 +21,7 @@ const uniforms = {
   additive: { type: '3f', value: colors.additive }
 }
 
-const rtt = new TxtGL.Texture(gl)
+const rtt = new ShadU.Texture(gl)
   .fragment(fragment, uniforms)
   .render().paint()
 

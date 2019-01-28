@@ -2,7 +2,7 @@
 import Stats from 'stats.js'
 import fragment from './fragment'
 
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 const OPTIMIZE_FACTOR = 0.5
 let WIDTH = window.innerWidth
@@ -17,7 +17,7 @@ if (!document.location.search.match(/nostats/)) {
   document.body.appendChild(stats.domElement)
 }
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   premultipliedAlpha: false,
   alpha: false,
   depth: false,
@@ -31,7 +31,7 @@ const uniform = {
   't': { type: '1f', value: 0 }
 }
 
-const rtt = new TxtGL.Texture(gl, {
+const rtt = new ShadU.Texture(gl, {
   width: WIDTH * OPTIMIZE_FACTOR,
   height: HEIGHT * OPTIMIZE_FACTOR
 }).fragment(fragment, uniform)

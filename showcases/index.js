@@ -1,6 +1,6 @@
 
 import Glide from '@glidejs/glide'
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 // https://www.shadertoy.com/view/lldyDs
 const fragment = `
@@ -100,7 +100,7 @@ const { width, height } = window.getComputedStyle(canvas)
 canvas.width = parseInt(width)
 canvas.height = parseInt(height)
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   premultipliedAlpha: false,
   alpha: false,
   depth: false,
@@ -115,7 +115,7 @@ const uniform = {
   'ratio': { type: '2f', value: [canvas.width / 2, canvas.height / 2] }
 }
 
-const rtt = new TxtGL.Texture(gl).fragment(fragment, uniform)
+const rtt = new ShadU.Texture(gl).fragment(fragment, uniform)
 
 function debounce (func, wait, immediate) {
   var timeout

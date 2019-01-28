@@ -2,7 +2,7 @@
 import Stats from 'stats.js'
 import fragment from './fragment'
 
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 const BLOBS = 64
 let WIDTH = window.innerWidth
@@ -17,7 +17,7 @@ if (!document.location.search.match(/nostats/)) {
   document.body.appendChild(stats.domElement)
 }
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   premultipliedAlpha: false,
   alpha: false,
   depth: false,
@@ -53,7 +53,7 @@ const uniforms = {
   'blobsSize': { type: '1fv', value: new Float32Array(size) }
 }
 
-const rtt = new TxtGL.Texture(gl, {
+const rtt = new ShadU.Texture(gl, {
   width: WIDTH / 2,
   height: HEIGHT / 2,
   texture: { minFilter: gl.LINEAR, magFilter: gl.LINEAR }

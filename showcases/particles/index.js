@@ -5,7 +5,7 @@ import data from './data'
 import vertex from './vertex'
 import fragment from './fragment'
 
-import TxtGL from 'txtgl'
+import ShadU from 'shadu'
 
 let WIDTH = window.innerWidth
 let HEIGHT = window.innerHeight
@@ -42,7 +42,7 @@ if (!document.location.search.match(/nostats/)) {
   document.body.appendChild(stats.domElement)
 }
 
-const gl = TxtGL.get3DContext(canvas, {
+const gl = ShadU.get3DContext(canvas, {
   premultipliedAlpha: false,
   alpha: false,
   depth: false,
@@ -57,14 +57,14 @@ var uniform = {
   dT: { type: '1f', value: 0 }
 }
 
-const velocity = new TxtGL.Texture(gl, {
+const velocity = new ShadU.Texture(gl, {
   width: CELLS_PARTICLE_DATA,
   height: CELLS_PARTICLE_DATA,
   texture: { type: gl.FLOAT }
 }).render()
 
 // Particles
-const particles = new TxtGL.Texture(gl, {
+const particles = new ShadU.Texture(gl, {
   width: CELLS_PARTICLE_DATA,
   height: CELLS_PARTICLE_DATA,
   texture: { type: gl.FLOAT }
@@ -73,7 +73,7 @@ const particles = new TxtGL.Texture(gl, {
 }).render()
 
 // Output
-const output = new TxtGL.Texture(gl, {
+const output = new ShadU.Texture(gl, {
   texture: { type: gl.FLOAT },
   geometry: {
     vertices: new Float32Array(VERTICES),

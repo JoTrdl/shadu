@@ -1,18 +1,18 @@
-/*! txtgl v1.0.0 | (c) 2018 Johann Troendle | https://github.com/JoTrdl/txtgl.git */
+/*! shadu v1.0.0 | (c) 2018 Johann Troendle | https://github.com/JoTrdl/shadu.git */
 /**
- * TxtGL module.
- * @namespace TxtGL
+ * ShadU module.
+ * @namespace ShadU
  */
 ;(function (root) {
   'use strict'
 
-  var TxtGL = {}
+  var ShadU = {}
 
   var DEVICE_PIXEL_RATIO = (typeof devicePixelRatio !== 'undefined' && devicePixelRatio) || 1
 
   /**
    * @function get3DContext
-   * @memberof TxtGL
+   * @memberof ShadU
    * @static
    *
    * Get a 3d context from the canvas
@@ -22,7 +22,7 @@
    * @param  {Object}                 options Options to pass to getContext()
    * @return {WebGLRenderingContext}  The WebGL context or null if not supported
    */
-  TxtGL.get3DContext = function (canvas, options) {
+  ShadU.get3DContext = function (canvas, options) {
     var names = ['webgl', 'experimental-webgl']
     var context = null
 
@@ -39,7 +39,7 @@
 
   /**
    * @function createProgram
-   * @memberof TxtGL
+   * @memberof ShadU
    * @static
    *
    * Create a GL program.
@@ -49,7 +49,7 @@
    * @param  {String}                fragment  Fragment code
    * @return {Program}                         The program compiled & linked.
    */
-  TxtGL.createProgram = function (gl, vertex, fragment) {
+  ShadU.createProgram = function (gl, vertex, fragment) {
     var vs
     var fs
     var program = gl.createProgram()
@@ -78,7 +78,7 @@
 
   /**
    * @function compileShader
-   * @memberof TxtGL
+   * @memberof ShadU
    * @static
    *
    * Compile the shader.
@@ -88,7 +88,7 @@
    * @param  {Int}                   type Shader type (gl.VERTEX_SHADER | gl.FRAGMENT_SHADER)
    * @return {Shader}                Compiled shader
    */
-  TxtGL.compileShader = function (gl, code, type) {
+  ShadU.compileShader = function (gl, code, type) {
     var shader = gl.createShader(type)
 
     gl.shaderSource(shader, code)
@@ -108,7 +108,7 @@
 
   /**
    * @function createTexture
-   * @memberof TxtGL
+   * @memberof ShadU
    * @static
    *
    * Create an empty texture.
@@ -119,7 +119,7 @@
    * @param  {Object}                options Extra options
    * @return {Texture}                       The texture
    */
-  TxtGL.createTexture = function (gl, width, height, options) {
+  ShadU.createTexture = function (gl, width, height, options) {
     var texture = gl.createTexture()
 
     // save infos in texture for future bindings
@@ -265,7 +265,7 @@
       var textures = (texture.length) ? texture : [texture]
       var t
       for (var i = 0; i < textures.length; i++) {
-        t = (textures[i].isTxtGLTexture && textures[i].output) || textures[i]
+        t = (textures[i].isShadUTexture && textures[i].output) || textures[i]
         gl.activeTexture(gl.TEXTURE0 + values[i])
         gl.bindTexture(gl.TEXTURE_2D, t)
       }
@@ -297,15 +297,15 @@
   /**
    * @class Texture
    * @constructor
-   * @memberof TxtGL
+   * @memberof ShadU
    * @static
    *
    * Texture constructor
    * @param {WebGLRenderingContext} gl      WebGL context for rendering
    * @param {Object}                options Object of options.
    */
-  var Texture = TxtGL.Texture = function (gl, options) {
-    this.isTxtGLTexture = true
+  var Texture = ShadU.Texture = function (gl, options) {
+    this.isShadUTexture = true
     this.options = options || {}
     this.gl = gl
 
@@ -341,8 +341,8 @@
     // Framebuffer & Ping-Pong textures
     this.frameBuffer = gl.createFramebuffer()
     this.textures = [
-      TxtGL.createTexture(gl, this.width, this.height, this.options.texture),
-      TxtGL.createTexture(gl, this.width, this.height, this.options.texture)
+      ShadU.createTexture(gl, this.width, this.height, this.options.texture),
+      ShadU.createTexture(gl, this.width, this.height, this.options.texture)
     ]
 
     this.frame = 0
@@ -351,7 +351,7 @@
 
     // Paint buffer & shader
     this.quadBuffer = gl.createBuffer()
-    this.paintShader = TxtGL.createProgram(gl, DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER)
+    this.paintShader = ShadU.createProgram(gl, DEFAULT_VERTEX_SHADER, DEFAULT_FRAGMENT_SHADER)
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this.quadBuffer)
     this.quadVertices = new Float32Array(PAINT_VERTICES)
@@ -387,7 +387,7 @@
    * @return {TextureInstance}       this
    */
   Texture.prototype.vertexFragment = function (vertex, fragment, userUniforms, userAttributes) {
-    var shader = TxtGL.createProgram(this.gl, vertex, HEADER_FRAGMENT_SHADER + '\n' + fragment)
+    var shader = ShadU.createProgram(this.gl, vertex, HEADER_FRAGMENT_SHADER + '\n' + fragment)
 
     this.shaders.push(shader)
     this.uniforms.push(userUniforms || {})
@@ -409,7 +409,7 @@
    * @return {TextureInstance}  this
    */
   Texture.prototype.image = function (image, flipY) {
-    var texture = TxtGL.createTexture(this.gl, this.width, this.height, {
+    var texture = ShadU.createTexture(this.gl, this.width, this.height, {
       flipY: flipY || true,
       data: image
     })
@@ -628,9 +628,9 @@
     } else if (typeof exports === 'object') {
       module.exports = factory()
     } else {
-      root.TxtGL = factory()
+      root.ShadU = factory()
     }
   }(root, function () {
-    return TxtGL
+    return ShadU
   }))
 })(this)

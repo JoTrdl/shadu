@@ -1,5 +1,5 @@
 {
-  "name": "txtgl",
+  "name": "shadu",
   "version": "1.0.0",
   "description": "WebGL helper to play with 2D textures rendering",
   "author": "Johann Troendle",
@@ -10,16 +10,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/JoTrdl/txtgl.git"
+    "url": "https://github.com/JoTrdl/shadu.git"
   },
-  "main": "./dist/txtgl.min.js",
+  "main": "./dist/shadu.min.js",
   "scripts": {
     "dev": "parcel ./showcases/*.html",
     "lint": "eslint ./src",
     "build": "parcel build ./showcases/*.html --public-url ./"
   },
   "alias": {
-    "txtgl": "./src/txtgl"
+    "shadu": "./src/shadu"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

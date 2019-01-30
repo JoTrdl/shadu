@@ -2,7 +2,6 @@
 WebGL helper to play with 2D textures rendering
 
 # Showcases
----
 #### Fluid simulation
 [![Fluid simulation](https://github.com/JoTrdl/shadu/blob/master/showcases/assets/fluid.gif?raw=true)](https://jotrdl.github.io/experiments/shadu/fluid.html)
 
@@ -16,5 +15,4 @@ WebGL helper to play with 2D textures rendering
 [![Metaballs](https://github.com/JoTrdl/shadu/blob/master/showcases/assets/metaballs.gif?raw=true)](https://jotrdl.github.io/experiments/shadu/metaballs.html)
 
 # License
----
 MIT. Copyright (c) 2018 Johann Troendle
